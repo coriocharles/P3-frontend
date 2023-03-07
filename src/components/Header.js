@@ -5,8 +5,9 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import Ticker from './Ticker'
 
-function Header() {
+function Header(props) {
     const initialState = { symbol: ''};
     const [formState, setFormState] = useState(initialState);
     const [resultData, setResultData] = useState(null)
@@ -21,13 +22,10 @@ function Header() {
         console.log(formState);
         // clear the form
         setFormState(initialState);
-        // fetch(`https://cloud.iexapis.com/stable/stock/${formState}/quote?token=pk_696f559b3cb64b788e34f7848ef884cb`)
-        //     .then(res => res.json())
-        //     .then()
     };
 
     return (
-        <div style={{backgroundImage: "url(https://i.imgur.com/MfcSGXF.png)"}}>
+        <div className='header' style={{backgroundImage: "url(https://i.imgur.com/MfcSGXF.png)"}}>
             <Navbar variant="light">
             <Button 
                 href='/portfolio' 
@@ -56,18 +54,19 @@ function Header() {
                             onChange={handleChange}
                             value={formState.symbol} 
                         />
-                        <Link to={`/portfolio/search/${formState.symbol}`}>
+                        <Link to={`/portfolio/${formState.symbol.toUpperCase()}`}>
                             <Button 
                                 variant="secondary"
                                 size="sm"
                                 as="input"
                                 type="submit"
                                 value="GO"
-                                style={{marginLeft: "5px"}} 
+                                style={{marginLeft: "5px"}}
+                                onClick={()=>setFormState(initialState)}
                             />
                         </Link>
 
-          {console.log(formState.symbol)}
+          {/* {console.log(formState.symbol)} */}
 
                         {/* <Form.Text className="text-muted">
                             Enter a symbol to search for stock information.
@@ -76,6 +75,7 @@ function Header() {
                 </Form>
             </Nav>
         </Navbar>
+        
         </div>
     )
 }
